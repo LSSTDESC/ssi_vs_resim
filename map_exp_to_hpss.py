@@ -30,7 +30,8 @@ for subdir in tqdm(subdirs):
 
 table = Table.read("data/tract4030ccds.fits")
 
-# Make a big table, 1 row per ccd, with columns for
+# Make a big table, 1 row per ccd, with original coaddInputs columns
+# and a new column for NERSC HPSS instance catalog
 instCats = []
 for row in tqdm(table):
     visit = row['visit']
