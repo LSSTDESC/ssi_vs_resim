@@ -37,6 +37,7 @@ dtype = [
     ("i_bulge_disk_flux_ratio", "f4"),
     ("z_bulge_disk_flux_ratio", "f4"),
     ("y_bulge_disk_flux_ratio", "f4"),
+    ("bulge_disk_flux_ratio", "f4"),
 ]
 
 # these are mappings from the column names expected by the ssi code and
@@ -89,6 +90,10 @@ for band in tqdm.tqdm('ugrizy'):
     bflux = cat.get_quantities(bname)[bname][imsk][inds]
     dflux = cat.get_quantities(dname)[dname][imsk][inds]
     d[f"{band}_bulge_disk_flux_ratio"] = bflux/dflux
+
+# Add a placeholder "bulge_disk_flux_ratio" column filled with nans so we don't accidentally
+# use the default bdfr of 1.0
+d["bulge_disk_flux_ratio"] = np.nan
 
 os.makedirs(
     "/global/cfs/cdirs/lsst/groups/fake-source-injection/ssi_vs_resim/",
