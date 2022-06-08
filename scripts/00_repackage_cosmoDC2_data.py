@@ -31,13 +31,13 @@ dtype = [
     ("disk_axis_ratio", "f4"),
     ("disk_pa", "f4"),
     ("disk_n", "f4"),
-    ("u_bulge_disk_flux_ratio", "f4"),
-    ("g_bulge_disk_flux_ratio", "f4"),
-    ("r_bulge_disk_flux_ratio", "f4"),
-    ("i_bulge_disk_flux_ratio", "f4"),
-    ("z_bulge_disk_flux_ratio", "f4"),
-    ("y_bulge_disk_flux_ratio", "f4"),
-    ("bulge_disk_flux_ratio", "f4"),
+    ("u_bulge_flux_fraction", "f4"),
+    ("g_bulge_flux_fraction", "f4"),
+    ("r_bulge_flux_fraction", "f4"),
+    ("i_bulge_flux_fraction", "f4"),
+    ("z_bulge_flux_fraction", "f4"),
+    ("y_bulge_flux_fraction", "f4"),
+    ("bulge_disk_flux_ratio", "f4"),  # fill this one with NaNs, so we notice if it gets used.
 ]
 
 # these are mappings from the column names expected by the ssi code and
@@ -89,7 +89,8 @@ for band in tqdm.tqdm('ugrizy'):
     dname = f"LSST_filters/diskLuminositiesStellar:LSST_{band}:observed"
     bflux = cat.get_quantities(bname)[bname][imsk][inds]
     dflux = cat.get_quantities(dname)[dname][imsk][inds]
-    d[f"{band}_bulge_disk_flux_ratio"] = bflux/dflux
+    flux = bflux + dflux
+    d[f"{band}_bulge_flux_fraction"] = bflux/flux
 
 # Add a placeholder "bulge_disk_flux_ratio" column filled with nans so we don't accidentally
 # use the default bdfr of 1.0

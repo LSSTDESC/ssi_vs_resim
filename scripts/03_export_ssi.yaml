@@ -1,5 +1,5 @@
 # Use this file to import the ssi catalog into an existing repo with
-# `butler import --export-file export_ssi.yaml <full path to repo> <full path to ssi catalog folder>`
+# `butler import --export-file 03_export_ssi.yaml <full path to repo> <full path to ssi catalog folder>`
 # where `<full path to ssi catalog folder>/tract_4430.parq` is
 # the catalog we want to import.
 description: Butler Data Repository Export
