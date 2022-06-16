@@ -1,0 +1,20 @@
+includeConfigs:
+  - ${GEN3_WORKFLOW_DIR}/python/desc/gen3_workflow/etc/bps_drp_baseline.yaml
+  - ${GEN3_WORKFLOW_DIR}/examples/bps_DC2-3828-y1_resources.yaml
+
+pipelineYaml: "${DRP_PIPE_DIR}/pipelines/LSSTCam-imSim/DRP-DP0.2.yaml#step2"
+
+payload:
+  payloadName: test
+  dataQuery: "instrument='LSSTCam-imSim'"
+  butlerConfig: /global/cfs/cdirs/lsst/production/gen3/DC2/Run2.2i/repo
+  inCollection: LSSTCam-imSim/defaults
+
+parsl_config:
+  retries: 1
+  monitoring: true
+  log_level: logging.WARNING
+  executor: WorkQueue
+  provider: Local
+  nodes_per_block: 10
+  worker_options: "--memory=90000"
