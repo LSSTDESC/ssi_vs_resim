@@ -8,4 +8,5 @@
 #SBATCH -o ssi_coadd_4430_00.out
 
 source ./04_setup.sh
+cd /global/cfs/cdirs/desc-fsi/ssi_vs_resim/submit
 bps submit /global/homes/j/jemeyers/src/ssi_vs_resim/scripts/04_bps_drp_fakes_coadds.yaml

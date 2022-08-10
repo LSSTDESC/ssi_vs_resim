@@ -1,0 +1,20 @@
+includeConfigs:
+  - ${GEN3_WORKFLOW_DIR}/python/desc/gen3_workflow/etc/bps_drp_baseline.yaml
+  - ${GEN3_WORKFLOW_DIR}/examples/bps_DC2-3828-y1_resources.yaml
+
+pipelineYaml: "/global/homes/j/jemeyers/src/ssi_vs_resim/reprocess/injected_coadds_step3.yaml"
+
+payload:
+  payloadName: test3
+  dataQuery: "skymap='DC2' and tract=4430 and patch=0"
+  butlerConfig: /global/cfs/cdirs/lsst/production/gen3/DC2/Run2.2i/repo
+  inCollection: u/jemeyers/test,u/jemeyers/ssi
+
+parsl_config:
+  retries: 1
+  monitoring: true
+  log_level: logging.WARNING
+  executor: WorkQueue
+  provider: Local
+  nodes_per_block: 6
+  worker_options: "--memory=90000"

@@ -1,0 +1,7 @@
+description: Inject sources into single visit images and rerun calibrate
+instrument: lsst.obs.lsst.LsstCamImSim
+tasks:
+  singleFrameSourceInjection:
+    class: lsst.pipe.tasks.processCcdWithFakes.ProcessCcdWithFakesTask
+    config:
+      insertFakes.doProcessAllDataIds: true

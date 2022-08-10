@@ -1,0 +1,42 @@
+includeConfigs:
+  - ${GEN3_WORKFLOW_DIR}/python/desc/gen3_workflow/etc/bps_drp_baseline.yaml
+  - ${GEN3_WORKFLOW_DIR}/examples/bps_DC2-3828-y1_resources.yaml
+
+description: Step2 on fakes_calexps
+instrument: lsst.obs.lsst.LsstCamImSim
+tasks:
+  consolidateSourceTable:
+    class: lsst.pipe.tasks.postprocess.ConsolidateSourceTableTask
+    config:
+      connections.catalogType: "fakes_"
+  consolidateVisitSummary:
+    class: lsst.pipe.tasks.postprocess.ConsolidateVisitSummaryTask
+    config:
+      connections.calexpType: "fakes_"
+  # Just use the original isolatedStarAssociation and finalizeCharacterization outputs
+  # isolatedStarAssociation:
+  #   class: lsst.pipe.tasks.isolatedStarAssociation.IsolatedStarAssociationTask
+  #   config:
+  #     connections.source_table_visit: "fakes_sourceTable_visit"
+  #     connections.isolated_star_sources: "fakes_isolated_star_sources"
+  #     connections.isolated_star_cat: "fakes_isolated_star_cat"
+  #     # connections.catalogType: "fakes_"
+  # finalizeCharacterization:
+  #   class: lsst.pipe.tasks.finalizeCharacterization.FinalizeCharacterizationTask
+  #   config:
+  #     connections.src_schema: "fakes_src_schema"
+  #     connections.srcs: "fakes_src"
+  #     connections.calexps: "fakes_calexp"
+  #     connections.isolated_star_cats: "fakes_isolated_star_cat"
+  #     connections.isolated_star_sources: "fakes_isolated_star_sources"
+  #     connections.finalized_psf_ap_corr_cat: "fakes_finalized_psf_ap_corr_cat"
+  #     connections.finalized_src_table: "fakes_finalized_src_table"
+  #     # connections.catalogType: "fakes_"
+  makeCcdVisitTable:
+    class: lsst.pipe.tasks.postprocess.MakeCcdVisitTableTask
+    config:
+      connections.calexpType: "fakes_"
+  makeVisitTable:
+    class: lsst.pipe.tasks.postprocess.MakeVisitTableTask
+    config:
+      connections.calexpType: "fakes_"

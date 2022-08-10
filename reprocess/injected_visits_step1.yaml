@@ -1,0 +1,15 @@
+includeConfigs:
+  - ${GEN3_WORKFLOW_DIR}/python/desc/gen3_workflow/etc/bps_drp_baseline.yaml
+  - ${GEN3_WORKFLOW_DIR}/examples/bps_DC2-3828-y1_resources.yaml
+
+description: Finish step1 on fakes_calexps
+instrument: lsst.obs.lsst.LsstCamImSim
+tasks:
+  writeSourceTable:
+    class: lsst.pipe.tasks.postprocess.WriteSourceTableTask
+    config:
+      connections.catalogType: "fakes_"
+  transformSourceTable:
+    class: lsst.pipe.tasks.postprocess.TransformSourceTableTask
+    config:
+      connections.catalogType: "fakes_"

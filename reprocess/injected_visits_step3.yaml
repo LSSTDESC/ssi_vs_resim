@@ -1,0 +1,60 @@
+includeConfigs:
+  - ${GEN3_WORKFLOW_DIR}/python/desc/gen3_workflow/etc/bps_drp_baseline.yaml
+  - ${GEN3_WORKFLOW_DIR}/examples/bps_DC2-3828-y1_resources.yaml
+
+description: Step3 on fakes_calexps
+instrument: lsst.obs.lsst.LsstCamImSim
+tasks:
+  makeWarp:
+    class: lsst.pipe.tasks.makeCoaddTempExp.MakeWarpTask
+    config:
+      connections.coaddName: "fakes_deep"
+      connections.calexpType: "fakes_"
+  assembleCoadd:
+    class: lsst.pipe.tasks.assembleCoadd.CompareWarpAssembleCoaddTask
+    config:
+      connections.inputCoaddName: "fakes_deep"
+      connections.outputCoaddName: "fakes_deep"
+      doInputMap: true
+  detection:
+    class: lsst.pipe.tasks.multiBand.DetectCoaddSourcesTask
+    config:
+      connections.inputCoaddName: "fakes_deep"
+      connections.outputCoaddName: "fakes_deep"
+  mergeDetections:
+    class: lsst.pipe.tasks.mergeDetections.MergeDetectionsTask
+    config:
+      connections.inputCoaddName: "fakes_deep"
+      connections.outputCoaddName: "fakes_deep"
+  deblend:
+    class: lsst.pipe.tasks.deblendCoaddSourcesPipeline.DeblendCoaddSourcesMultiTask
+    config:
+      connections.inputCoaddName: "fakes_deep"
+      connections.outputCoaddName: "fakes_deep"
+  measure:
+    class: lsst.pipe.tasks.multiBand.MeasureMergedCoaddSourcesTask
+    config:
+      connections.inputCoaddName: "fakes_deep"
+      connections.outputCoaddName: "fakes_deep"
+      connections.refCat: "cal_ref_cat_2_2"
+      match.refObjLoader.ref_dataset_name: "cal_ref_cat_2_2"
+      python: >
+        config.match.refObjLoader.filterMap = {band: 'lsst_%s_smeared' % (band) for band in 'ugrizy'};
+  mergeMeasurements:
+    class: lsst.pipe.tasks.mergeMeasurements.MergeMeasurementsTask
+    config:
+      connections.inputCoaddName: "fakes_deep"
+      connections.outputCoaddName: "fakes_deep"
+  forcedPhotCoadd:
+    class: lsst.meas.base.forcedPhotCoadd.ForcedPhotCoaddTask
+    config:
+      connections.inputCoaddName: "fakes_deep"
+      connections.outputCoaddName: "fakes_deep"
+  transformObjectTable:
+    class: lsst.pipe.tasks.postprocess.TransformObjectCatalogTask
+    config:
+      connections.coaddName: "fakes_deep"
+  writeObjectTable:
+    class: lsst.pipe.tasks.postprocess.WriteObjectTableTask
+    config:
+      connections.coaddName: "fakes_deep"

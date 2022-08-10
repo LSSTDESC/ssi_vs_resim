@@ -1,0 +1,5 @@
+description: Inject sources into coadd images
+instrument: lsst.obs.lsst.LsstCamImSim
+tasks:
+  coaddSourceInjection:
+    class: lsst.pipe.tasks.insertFakes.InsertFakesTask

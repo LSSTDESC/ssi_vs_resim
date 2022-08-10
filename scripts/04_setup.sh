@@ -1,4 +1,4 @@
-weekly_version=w_2022_16
+weekly_version=w_2022_21
 LSST_DISTRIB=/cvmfs/sw.lsst.eu/linux-x86_64/lsst_distrib/${weekly_version}
 source "${LSST_DISTRIB}/loadLSST-ext.bash"
 setup lsst_distrib
